@@ -6,11 +6,11 @@ define('BASE_PATH', __DIR__);
 
 // obtener la URL actual (por ejemplo: /nexus_center/login)
 
-$requestUri = $_SERVER['REQUEST_URI'];
+$requestURI = $_SERVER['REQUEST_URI'];
 
 // Quitar le prefijo de la carpeta del proyecto
 
-$request = str_replace('/vetwilling', '', $requestUri);
+$request = str_replace('/vetwilling', '', $requestURI);
 
 // Quitar parametros tipo ?id=123
 
@@ -37,6 +37,9 @@ switch ($request) {
         break;
 
     default:
+        http_response_code(404);
         require BASE_PATH . '/app/views/auth/error404.html';
         break;
 }
+
+?>

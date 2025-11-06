@@ -1,9 +1,11 @@
-RewriteEngine on
-RewriteEngine /nexus_center/
+RewriteEngine On
+RewriteBase /vetwilling/
 
 #Ignore archivos o carpetas reales
-RewriteEngine %{REQUEST_FILENAME} !-f
-RewriteEngine %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 #Redirige todo a index.php
+
 RewriteRule ^(.*)$ index.php [QSA,L]
