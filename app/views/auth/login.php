@@ -29,18 +29,19 @@
                     <h2>INICIAR SESIÓN</h2>
                     <p>Por favor, ingresa tu usuario y contraseña para acceder al sistema.</p>
 
-                    <form class="login">
-                        <div class="cont-input"><i class="fa-regular fa-user"></i><input type="text" id="user"
-                                name="user" placeholder="Usuario" required>
+                    <form class="login" action="iniciar-sesion" method="POST">
+                        <div class="cont-input">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="email" id="email" name="email" placeholder="Usuario" required>
                         </div>
 
-                        <div class="cont-input"><i class="fa-solid fa-lock"></i><input type="password" id="password"
-                                name="password" placeholder="Contraseña" required>
+
+                        <div class="cont-input"><i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Contraseña" required>
                         </div>
 
                         <a href="recuperarContraseña.html" id="recover">¿Olvidaste Tu Contraseña?</a>
-                        <button id="btn_ingresar" type="submit"><a
-                                href="../dashBoard/veterinarias/dashBoard.html">Ingresar</a></button>
+                        <button id="btn_ingresar" type="submit">Ingresar</button>
 
                     </form>
                 </div>

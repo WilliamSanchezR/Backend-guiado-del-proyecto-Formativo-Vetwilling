@@ -2,7 +2,7 @@
 
 // index.php - Router principal
 
-define('BASE_PATH', __DIR__);
+require_once __DIR__ . '/config/config.php';
 
 // obtener la URL actual (por ejemplo: /nexus_center/login)
 
@@ -32,8 +32,26 @@ switch ($request) {
         require BASE_PATH . '/app/views/website/index.html';
         break;
 
+    // Inicio rutas necesarias para le login
+
     case '/login':
-        require BASE_PATH . '/app/views/auth/login.html';
+        require BASE_PATH . '/app/views/auth/login.php';
+        break;
+
+    case '/iniciar-sesion':
+        require BASE_PATH . '/app/controllers/loginControllers.php';
+        break;
+
+    // Fin rutas necesarias para el login
+
+    // ---------------------------------------VETERINARIO-------------------------------------//
+
+    case '/veterinario/dashboard':
+        require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoard.php';
+        break;
+
+    case '/veterinario/registrar-veterinario':
+        require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoardRegUsuario.php';
         break;
 
     default:
@@ -41,5 +59,3 @@ switch ($request) {
         require BASE_PATH . '/app/views/auth/error404.html';
         break;
 }
-
-?>
