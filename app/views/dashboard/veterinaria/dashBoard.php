@@ -1,3 +1,7 @@
+<?php
+require_once BASE_PATH . '/app/helpers/session_veterinario.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +57,7 @@
                             <i class="bi bi-heart-fill text-danger"></i>
                         </div>
                         <div>
-                            <h3 class="mb-0">248</h3>
+                            <h3 classs="mb-0">248</h3>
                             <p class="text-muted mb-0">Total Pacientes</p>
                         </div>
                     </div>

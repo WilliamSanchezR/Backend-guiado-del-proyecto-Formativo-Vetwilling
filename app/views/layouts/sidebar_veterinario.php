@@ -20,7 +20,7 @@
             <i class="bi bi-calendar3"></i>
             <span class="texto-item-sidebar">Calendario</span>
         </a>
-        <a href="views/veterinarias/dashBoardCitas.html" class="item-sidebar">
+        <a href="<?= BASE_URL ?>/veterinario/consultar-veterinario" class="item-sidebar">
             <i class="bi bi-calendar-check"></i>
             <span class="texto-item-sidebar">Citas</span>
         </a>

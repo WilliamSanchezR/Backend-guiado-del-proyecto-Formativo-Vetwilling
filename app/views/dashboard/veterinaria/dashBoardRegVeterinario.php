@@ -8,7 +8,7 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard Veterinario - Registro Paciente</title>
+    <title>DashBoard Veterinario - Registro Veterinario</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -49,30 +49,30 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
         <div class="wizard-container">
             <div class="wizard-header">
                 <i class="bi bi-heart-pulse-fill"></i>
-                <h2>Registro de Paciente Veterinario</h2>
-                <p class="text-muted">Complete todos los campos requeridos para registrar un nuevo paciente</p>
+                <h2>Registro de Veterinario</h2>
+                <p class="text-muted">Complete todos los campos requeridos para registrar un nuevo Veterinario</p>
             </div>
 
             <div class="progress-wrapper">
                 <div class="progress">
                     <div id="bar1" class="progress-bar active"></div>
-                    <div id="bar2" class="progress-bar"></div>
+                    <!-- <div id="bar2" class="progress-bar"></div>
                     <div id="bar3" class="progress-bar"></div>
                     <div id="bar4" class="progress-bar"></div>
-                    <div id="bar5" class="progress-bar"></div>
+                    <div id="bar5" class="progress-bar"></div> -->
                     <div id="bar6" class="progress-bar"></div>
                 </div>
                 <div class="progress-labels">
                     <span class="active">Propietario</span>
-                    <span>Mascota</span>
+                    <!-- <span>Mascota</span>
                     <span>Historial</span>
                     <span>Atención</span>
-                    <span>Tratamiento</span>
+                    <span>Tratamiento</span> -->
                     <span>Confirmar</span>
                 </div>
             </div>
 
-            <form id="vetForm">
+            <form id="vetForm" action="<?= BASE_URL ?>/veterinario/guardar-veterinario" method="POST">
 
                 <!-- Paso 1: Datos del Propietario -->
                 <div class="step active">
@@ -81,14 +81,18 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><i class="bi bi-person"></i> Nombre completo *</label>
-                                <input type="text" id="nombrePropietario" required placeholder="Ej: Juan Pérez García">
+                                <label><i class="bi bi-person"></i> Nombres</label>
+                                <input type="text" id="nombrePropietario" name="nombres" required placeholder="Ej: Juan Pérez García">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="bi bi-person"></i> Apellidos</label>
+                                <input type="text" id="apellidoPropietario" name="apellidos" required placeholder="Ej: García">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-card-text"></i> Tipo de documento *</label>
-                                <select id="tipoDocumento" required>
+                                <select id="tipoDocumento" name="tipo_documento" required>
                                     <option value="">Seleccione...</option>
                                     <option value="CC">Cédula de Ciudadanía</option>
                                     <option value="CE">Cédula de Extranjería</option>
@@ -102,13 +106,13 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-hash"></i> Número de documento *</label>
-                                <input type="number" id="documento" required placeholder="12345678">
+                                <input type="number" id="documento" name="numero_documento" required placeholder="12345678">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-telephone"></i> Teléfono *</label>
-                                <input type="tel" id="telefono" required placeholder="+57 300 123 4567">
+                                <input type="tel" id="telefono" name="telefono" required placeholder="+57 300 123 4567">
                             </div>
                         </div>
                     </div>
@@ -117,7 +121,7 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-envelope"></i> Correo electrónico *</label>
-                                <input type="email" id="correo" required placeholder="ejemplo@correo.com">
+                                <input type="email" id="correo" name="email" required placeholder="ejemplo@correo.com">
                             </div>
                         </div>
                     </div>
@@ -150,7 +154,7 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                     </div>
                 </div>
 
-                <!-- Paso 2: Datos de la Mascota -->
+                <!-- Paso 2: Datos de la Mascota
                 <div class="step">
                     <h3><i class="bi bi-heart me-2"></i>Datos de la Mascota</h3>
 
@@ -246,8 +250,8 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                     </div>
                 </div>
 
-                <!-- Paso 3: Historial Médico -->
-                <div class="step">
+                <-- Paso 3: Historial Médico -->
+                <!-- <div class="step">
                     <h3><i class="bi bi-file-medical me-2"></i>Historial Médico</h3>
 
                     <div class="form-group">
@@ -298,10 +302,10 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                             Siguiente <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Paso 4: Información de Atención -->
-                <div class="step">
+                <!-- <div class="step">
                     <h3><i class="bi bi-clipboard-check me-2"></i>Información de Atención</h3>
 
                     <div class="form-group">
@@ -361,10 +365,10 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                             Siguiente <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Paso 5: Tratamiento y Observaciones -->
-                <div class="step">
+                <!-- <div class="step">
                     <h3><i class="bi bi-clipboard2-pulse me-2"></i>Tratamiento y Observaciones</h3>
 
                     <div class="form-group">
@@ -425,7 +429,7 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                             Siguiente <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
-                </div>
+                </div> -->
 
                 <!--Paso de confirmación -->
                 <div class="step">

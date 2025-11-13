@@ -51,7 +51,15 @@ switch ($request) {
         break;
 
     case '/veterinario/registrar-veterinario':
-        require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoardRegUsuario.php';
+        require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoardRegVeterinario.php';
+        break;
+
+    case '/veterinario/guardar-veterinario':
+        require BASE_PATH . '/app/controllers/veterinarioController.php';
+        break;
+
+    case '/veterinario/consultar-veterinario':
+        require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoardCitas.php';
         break;
 
     default:

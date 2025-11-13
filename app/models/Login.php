@@ -38,7 +38,8 @@ class Login
                 'id_usuario' => $user['id_usuario'],
                 'id_rol' => $user['id_rol'],
                 'nombre' => $user['nombres'],
-                'correo' => $user['email']
+                'correo' => $user['email'],
+                'id_veterinaria' => $user['id_veterinaria']
             ];
         } catch (PDOException $e) {
             error_log("Error en el modelo login: " . $e->getMessage());
