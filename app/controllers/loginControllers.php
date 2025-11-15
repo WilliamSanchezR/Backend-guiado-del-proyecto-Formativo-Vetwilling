@@ -47,3 +47,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Metodo no permitido";
     exit();
 }
+
+// Redireccion segun el rol
+
+$redirectUrl = '/vetwilling/login';
+$mensaje = 'Rol inexistente. Redirigiendo al inicio e sesion...';
+
+switch ($resultado['id_rol']) {
+
+    case 1:
+        $redirect = '/vetwilling/veterinario/dashboard';
+        $mensaje = 'Bienvenido veterinario';
+        break;
+
+    case 2:
+        $redirect = '/vetwilling/administrador/dashboard';
+        $mensaje = 'Bienvenido administrador';
+        break;
+
+    case 3:
+        $redirect = '/vetwilling/usuario/dashboard';
+        $mensaje = 'Bienvenido usuario';
+        break;
+}
+
+mostrarSweetAlert('succes', 'Ingreso exitoso', $mensaje, $redirectUrl);
+exit();

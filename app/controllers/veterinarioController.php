@@ -11,20 +11,51 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'POST':
-        registrarVeterinario();
+
+        $accion = $_POST['accion'] ?? '';
+
+        if ($accion === 'actualizar') {
+            actualizarVeterinario();
+        } else {
+            registrarVeterinario();
+        }
+
         break;
 
     case 'GET':
-        mostrarVeterinario();
+
+        // Se declara la variable accion para capturar la accion del boton eliminar 
+        $accion = $_GET['accion'] ?? '';
+
+        if ($accion === 'eliminar') {
+
+            // Esta funcion elimina el veterinario con el metodo GET
+
+            eliminarVeterinario($_GET['id']);
+        }
+
+        if (isset($_GET['id'])) {
+
+            // Esta  funcion llena el formulari de editar a un veterinario
+
+            listarVeterinario($_GET['id']);
+        } else {
+
+            // estafuncion llena la tabla de instructores
+
+            mostrarVeterinarios();
+        }
+
         break;
 
-    case 'PUT':
-        actualizarVeterinario();
-        break;
+    // EL PATO DEL INSTRUCTOR SE EQUIVOCO, PATO.
+    // case 'PUT':
+    //     actualizarVeterinario();
+    //     break;
 
-    case 'DELETE':
-        eliminarVeterinario();
-        break;
+    // case 'DELETE':
+    //     eliminarVeterinario();
+    //     break;
 
     default:
         http_response_code(405);
@@ -94,7 +125,7 @@ function registrarVeterinario()
     exit();
 }
 
-function mostrarVeterinario()
+function mostrarVeterinarios()
 {
 
     // session_start();
@@ -108,6 +139,83 @@ function mostrarVeterinario()
     return $veterinario;
 }
 
-function actualizarVeterinario() {}
+function listarVeterinario($id)
+{
 
-function eliminarVeterinario() {}
+    $objVeterinario = new Veterinario();
+    $veterinario = $objVeterinario->listarVeterinario($id);
+
+    return $veterinario;
+}
+
+function actualizarVeterinario()
+{
+
+
+    // capturamos en variables los datos desde el formulario a travez del metodo POST y los name de los campos
+
+    $id_usuario = $_POST['id_usuario'] ?? '';
+    $nombres = $_POST['nombres'] ?? '';
+    $apellidos = $_POST['apellidos'] ?? '';
+    $tipo_documento = $_POST['tipo_documento'] ?? '';
+    $numero_documento = $_POST['numero_documento'] ?? '';
+    $telefono = $_POST['telefono'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $id_rol = '2';
+    $password_hash = '123';
+    $estado = 'activo';
+    $tipo_usuario = 'Veterinario';
+    $id_veterinaria = '1';
+
+    // Validamos los caampos que son obligatorios
+
+    if (empty($numero_documento) || empty($nombres) || empty($apellidos) || empty($tipo_documento) || empty($telefono) || empty($email)) {
+        mostrarSweetAlert('error', 'Campos vacios', 'Por favor completar todos los campos');
+        exit();
+    }
+
+    // POO - instanciamos la clase
+
+    $objVeterinario = new Veterinario();
+    $data = [
+        'id_usuario' => $id_usuario,
+        'nombres' => $nombres,
+        'apellidos' => $apellidos,
+        'tipo_documento' => $tipo_documento,
+        'numero_documento' => $numero_documento,
+        'telefono' => $telefono,
+        'email' => $email,
+        'id_rol' => $id_rol,
+        'password_hash' => $password_hash,
+        'estado' => $estado,
+        'tipo_usuario' => $tipo_usuario,
+        'id_veterinaria' => $id_veterinaria
+    ];
+
+    // Enviamos la data al metodo (registrar) de la clase instanciada anteriormente (Veterinario) y esperamos una respuesta booleana del modelo en resultados
+
+    $resultado = $objVeterinario->actualizar($data);
+
+    // Si la respuesta del modelo es verdadera confirmamos el registro y redireccionameos, si es falsa notificamos y redireccionamos
+
+    if ($resultado === true) {
+        mostrarSweetAlert('success', 'Actualizacion del veterinario exitoso', 'Se ha actualizado el veterinario', '/vetwilling/veterinario/registrar-veterinario');
+    } else {
+        mostrarSweetAlert('error', 'Error al actualizar', 'No se pudo actualizar el veterinario. Intenta nuevamente');
+    }
+    exit();
+}
+
+function eliminarVeterinario($id)
+{
+
+    $objVeterinario = new Veterinario();
+    $respuesta = $objVeterinario->eliminar($id);
+
+    if ($respuesta === true) {
+        mostrarSweetAlert('success', 'Eliminacion del veterinario exitosa', 'Se ha eliminado el veterinario de la veterinaria', '/vetwilling/veterinario/registrar-veterinario');
+    } else {
+        mostrarSweetAlert('error', 'Error al eliminar', 'No se pudo eliminar el veterinario. Intenta nuevamente');
+    }
+    exit();
+}

@@ -64,4 +64,65 @@ class Veterinario
             return [];
         }
     }
+
+    public function listarVeterinario($id)
+    {
+
+        try {
+
+            $consultar = "SELECT * FROM usuario WHERE id_usuario = :id LIMIT 1";
+
+            // Preparamos la accion a ejecutar y la ejecutamos
+
+            $resultado = $this->conexion->prepare($consultar);
+            $resultado->bindParam(':id', $id);
+            $resultado->execute();
+
+            return $resultado->fetch();
+        } catch (PDOException $e) {
+            die("Error en veterinario::listar" . $e->getMessage());
+        }
+    }
+
+    public function actualizar($data)
+    {
+        try {
+            $actualizar = "UPDATE usuario SET tipo_documento = :tipo_documento, numero_documento = :numero_documento, nombres = :nombres, apellidos = :apellidos, telefono = :telefono, email = :email, id_rol = :id_rol, estado = :estado WHERE id_usuario = :id_usuario";
+
+            // Preparamos la acciona a ejecutar y la ejecutamos
+
+            $resultado = $this->conexion->prepare($actualizar);
+            $resultado->bindParam(':id_usuario', $data['id_usuario']);
+            $resultado->bindParam(':tipo_documento', $data['tipo_documento']);
+            $resultado->bindParam(':numero_documento', $data['numero_documento']);
+            $resultado->bindParam(':nombres', $data['nombres']);
+            $resultado->bindParam(':apellidos', $data['apellidos']);
+            $resultado->bindParam(':telefono', $data['telefono']);
+            $resultado->bindParam(':id_rol', $data['id_rol']);
+            $resultado->bindParam(':estado', $data['estado']);
+            $resultado->bindParam(':email', $data['email']);
+
+            return $resultado->execute();
+        } catch (PDOException $e) {
+            error_log("Error en veterinario::actualizar" . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function eliminar($id)
+    {
+        try {
+
+            $eliminar = "DELETE FROM usuario WHERE id_usuario=:id";
+
+            // preparamos la accion a ejecutar y la ejecutamos
+
+            $resultado = $this->conexion->prepare($eliminar);
+            $resultado->bindParam(':id', $id);
+            return $resultado->execute();
+        } catch (PDOException $e) {
+            die("Error en veterinario::eliminar" . $e->getMessage());
+            return [];
+        }
+    }
 }

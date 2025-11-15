@@ -7,7 +7,7 @@ require_once BASE_PATH . '/app/controllers/veterinarioController.php';
 
 // Llamamos la funcion especifica que existe en dicho controlador
 
-$datos = mostrarVeterinario();
+$datos = mostrarVeterinarios();
 ?>
 
 <!DOCTYPE html>
@@ -124,26 +124,26 @@ $datos = mostrarVeterinario();
                     <tbody>
 
                         <?php if (!empty($datos)): ?>
-                            <?php foreach ($datos as $veterinaria): ?>
+                            <?php foreach ($datos as $veterinario): ?>
                                 <tr class="fila-gris">
-                                    <td><?= $veterinaria['id_usuario'] ?></td>
-                                    <td><?= $veterinaria['tipo_documento'] ?></td>
-                                    <td><?= $veterinaria['numero_documento'] ?></td>
-                                    <td><?= $veterinaria['nombres'] ?></td>
-                                    <td><?= $veterinaria['apellidos'] ?></td>
-                                    <td><?= $veterinaria['telefono'] ?></td>
-                                    <td><?= $veterinaria['email'] ?></td>
-                                    <td><?= $veterinaria['estado'] ?></td>
-                                    <td><?= $veterinaria['tipo_usuario'] ?></td>
-                                    <td><?= $veterinaria['id_rol'] ?></td>
-                                    <td><?= $veterinaria['id_veterinaria'] ?></td>
+                                    <td><?= $veterinario['id_usuario'] ?></td>
+                                    <td><?= $veterinario['tipo_documento'] ?></td>
+                                    <td><?= $veterinario['numero_documento'] ?></td>
+                                    <td><?= $veterinario['nombres'] ?></td>
+                                    <td><?= $veterinario['apellidos'] ?></td>
+                                    <td><?= $veterinario['telefono'] ?></td>
+                                    <td><?= $veterinario['email'] ?></td>
+                                    <td><?= $veterinario['estado'] ?></td>
+                                    <td><?= $veterinario['tipo_usuario'] ?></td>
+                                    <td><?= $veterinario['id_rol'] ?></td>
+                                    <td><?= $veterinario['id_veterinaria'] ?></td>
                                     <td>
-                                        <button class="btn-accion btn-editar" title="Editar">
+                                        <a href="<?= BASE_URL ?>/veterinario/editar-veterinario?id=<?= $veterinario['id_usuario'] ?>" class="btn-accion btn-editar" title="Editar">
                                             <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn-accion btn-eliminar" title="Eliminar">
+                                        </a>
+                                        <a href="<?= BASE_URL ?>/veterinario/eliminar-veterinario?accion=eliminar&id=<?= $veterinario['id_usuario'] ?>" class="btn-accion btn-eliminar" title="Eliminar">
                                             <i class="bi bi-trash"></i>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

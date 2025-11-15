@@ -62,6 +62,18 @@ switch ($request) {
         require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoardCitas.php';
         break;
 
+    case '/veterinario/editar-veterinario':
+        require BASE_PATH . '/app/views/dashboard/veterinaria/dashBoardEditVeterinario.php';
+        break;
+
+    case '/veterinario/actualizar-veterinario':
+        require BASE_PATH . '/app/controllers/veterinarioController.php';
+        break;
+
+    case '/veterinario/eliminar-veterinario':
+        require BASE_PATH . '/app/controllers/veterinarioController.php';
+        break;
+
     default:
         http_response_code(404);
         require BASE_PATH . '/app/views/auth/error404.html';

@@ -1,5 +1,20 @@
 <?php
 require_once BASE_PATH . '/app/helpers/session_veterinario.php';
+
+// enlazamos la dependencia, en este caso el controlador que tiene la funcion de consultar los datos
+
+require_once BASE_PATH . '/app/controllers/veterinarioController.php';
+
+
+
+// asignamos el valo id del registro segun la tabla
+
+$id = $_GET['id'];
+
+// Llamamos la funcion especifica que existe en dicho controlador y le pasamos los datos a una variable que podamos manipular en este archivo
+
+$veterinario = listarVeterinario($id);
+
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +23,7 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard Veterinario - Registro Veterinario</title>
+    <title>Modulo edicion datos veterinario</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -48,8 +63,8 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
         <!-- ÁREA DE CONTENIDO -->
         <div class="wizard-container">
             <div class="wizard-header">
-                <i class="bi bi-heart-pulse-fill"></i>
-                <h2>Registro de Veterinario</h2>
+                <i class="bi bi-feather"></i>
+                <h2>Edicion datos Veterinario</h2>
                 <p class="text-muted">Complete todos los campos requeridos para registrar un nuevo Veterinario</p>
             </div>
 
@@ -72,33 +87,55 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                 </div>
             </div>
 
-            <form id="vetForm" action="<?= BASE_URL ?>/veterinario/guardar-veterinario" method="POST">
-
+            <form id="vetForm" action="<?= BASE_URL ?>/veterinario/actualizar-veterinario" method="POST">
+                <input type="hidden" name="id_usuario" value="<?= $veterinario['id_usuario'] ?>">
+                <input type="hidden" name="accion" value="actualizar">
                 <!-- Paso 1: Datos del Propietario -->
                 <div class="step active">
-                    <h3><i class="bi bi-person-badge me-2"></i>Datos del Veterinario</h3>
+                    <h3><i class="bi bi-person-badge me-2"></i>Datos del veterinario</h3>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-person"></i> Nombres</label>
-                                <input type="text" id="nombrePropietario" name="nombres" required placeholder="Ej: Juan Pérez García">
+                                <input type="text" id="nombrePropietario" name="nombres" value="<?= $veterinario['nombres'] ?>" placeholder="Ej: Juan Pérez García">
                             </div>
                             <div class="form-group">
                                 <label><i class="bi bi-person"></i> Apellidos</label>
-                                <input type="text" id="apellidoPropietario" name="apellidos" required placeholder="Ej: García">
+                                <input type="text" id="apellidoPropietario" name="apellidos" value="<?= $veterinario['apellidos'] ?>" placeholder="Ej: García">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-card-text"></i> Tipo de documento *</label>
-                                <select id="tipoDocumento" name="tipo_documento" required>
-                                    <option value="">Seleccione...</option>
+                                <select id="tipoDocumento" name="tipo_documento">
+                                    <option value="<?= $veterinario['tipo_documento'] ?>"><?= $veterinario['tipo_documento'] ?></option>
                                     <option value="CC">Cédula de Ciudadanía</option>
                                     <option value="CE">Cédula de Extranjería</option>
                                     <option value="PAS">Pasaporte</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><i class="bi bi-envelope"></i> Rol</label>
+                                <select id="rol" name="id_rol">
+                                    <option value="<?= $veterinario['id_rol'] ?>"><?= $veterinario['id_rol'] ?></option>
+                                    <option value="2">Administrador</option>
+                                    <option value="1">Veterinario</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label><i class="bi bi-envelope"></i> Estado</label>
+                                <select id="estado" name="estado">
+                                    <option value="<?= $veterinario['estado'] ?>"><?= $veterinario['estado'] ?></option>
+                                    <option value="Activo">Activo</option>
+                                    <option value="Bloqueado">Bloqueado</option>
+                                </select>
+                            </div>
+                                      
                         </div>
                     </div>
 
@@ -106,13 +143,13 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-hash"></i> Número de documento *</label>
-                                <input type="number" id="documento" name="numero_documento" required placeholder="12345678">
+                                <input type="number" id="documento" name="numero_documento" value="<?= $veterinario['numero_documento'] ?>" placeholder="12345678">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-telephone"></i> Teléfono *</label>
-                                <input type="tel" id="telefono" name="telefono" required placeholder="+57 300 123 4567">
+                                <input type="tel" id="telefono" name="telefono" value="<?= $veterinario['telefono'] ?>" placeholder="+57 300 123 4567">
                             </div>
                         </div>
                     </div>
@@ -121,35 +158,17 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label><i class="bi bi-envelope"></i> Correo electrónico *</label>
-                                <input type="email" id="correo" name="email" required placeholder="ejemplo@correo.com">
+                                <input type="email" id="correo" name="email" value="<?= $veterinario['email'] ?>" placeholder="ejemplo@correo.com">
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label><i class="bi bi-geo-alt"></i> Dirección completa *</label>
-                        <input type="text" id="direccion" required placeholder="Calle 12 # 34-56, Apto 102">
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><i class="bi bi-building"></i> Ciudad *</label>
-                                <input type="text" id="ciudad" required placeholder="Bogotá">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><i class="bi bi-map"></i> Barrio</label>
-                                <input type="text" id="barrio" placeholder="Chapinero">
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="buttons">
                         <span></span>
                         <button type="button" class="btn-next" onclick="nextStep()">
-                            Siguiente <i class="bi bi-arrow-right"></i>
+                            Editar datos <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
                 </div>
@@ -437,7 +456,7 @@ require_once BASE_PATH . '/app/helpers/session_veterinario.php';
                     <p>Por favor, revisa que toda la información sea correcta antes de continuar.</p>
 
                     <div class="buttons">
-                        <button type="button" class="btn btn-secondary" id="btnVolver">Volver a revisar</button>
+                        <button href="<?= BASE_URL ?>/veterinario/consultar-veterinario" type="button" class="btn btn-secondary" id="btnVolver">Volver a revisar</button>
                         <button type="submit" class="btn btn-success" id="btnConfirmar">Confirmar y enviar</button>
                     </div>
                 </div>
